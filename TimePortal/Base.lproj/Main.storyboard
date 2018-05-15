@@ -1,24 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRk-4M-7r7">
+                                <rect key="frame" x="97" y="113" width="127" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Add Entry"/>
+                                <connections>
+                                    <segue destination="ag9-tm-Zqh" kind="presentation" id="Vgs-hR-hdP"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iZg-Ce-jfO">
+                                <rect key="frame" x="32" y="256" width="256" height="292"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tEt-dy-xsL">
+                                        <rect key="frame" x="0.0" y="0.0" width="256" height="92"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="IMG_4527" translatesAutoresizingMaskIntoConstraints="NO" id="GxU-YQ-2JS">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="92"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="rZt-d6-yzS"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="IMG_4756" translatesAutoresizingMaskIntoConstraints="NO" id="t3l-gm-V7V">
+                                                <rect key="frame" x="88" y="0.0" width="80" height="92"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="IMG_7047" translatesAutoresizingMaskIntoConstraints="NO" id="GAO-4q-PFt">
+                                                <rect key="frame" x="176" y="0.0" width="80" height="92"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="t3l-gm-V7V" firstAttribute="centerX" secondItem="tEt-dy-xsL" secondAttribute="centerX" id="t2E-XY-gg6"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JVM-R3-Ard">
+                                        <rect key="frame" x="0.0" y="100" width="256" height="92"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VTb-A7-zAJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="92"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="xKv-h8-0xl"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9YJ-KT-cpO">
+                                                <rect key="frame" x="88" y="0.0" width="80" height="92"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RcN-D8-TV3">
+                                                <rect key="frame" x="176" y="0.0" width="80" height="92"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="9YJ-KT-cpO" firstAttribute="centerX" secondItem="JVM-R3-Ard" secondAttribute="centerX" id="zsX-n3-Lr2"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LXn-l2-SNb">
+                                        <rect key="frame" x="0.0" y="200" width="256" height="92"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_7898" translatesAutoresizingMaskIntoConstraints="NO" id="Hv6-WG-5e4">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="92"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="80" id="XJu-QV-NfI"/>
+                                                </constraints>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_8410" translatesAutoresizingMaskIntoConstraints="NO" id="mpS-h8-Cpa">
+                                                <rect key="frame" x="88" y="0.0" width="80" height="92"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_8690" translatesAutoresizingMaskIntoConstraints="NO" id="eqk-sd-Jwu">
+                                                <rect key="frame" x="176" y="0.0" width="80" height="92"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="mpS-h8-Cpa" firstAttribute="centerX" secondItem="LXn-l2-SNb" secondAttribute="centerX" id="rBh-hT-Hl3"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="JVM-R3-Ard" firstAttribute="centerY" secondItem="iZg-Ce-jfO" secondAttribute="centerY" id="5ei-HX-qyj"/>
+                                    <constraint firstItem="JVM-R3-Ard" firstAttribute="top" secondItem="tEt-dy-xsL" secondAttribute="top" constant="100" id="sb2-D3-M3W"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="iZg-Ce-jfO" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" id="2A2-0a-oKI"/>
+                            <constraint firstItem="iZg-Ce-jfO" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="42Z-d0-4H5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="iZg-Ce-jfO" secondAttribute="trailing" constant="32" id="5lR-ad-kgS"/>
+                            <constraint firstItem="iZg-Ce-jfO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="ba7-Ep-L1G"/>
+                            <constraint firstAttribute="bottom" secondItem="iZg-Ce-jfO" secondAttribute="bottom" constant="20" symbolic="YES" id="gqJ-A6-Y3a"/>
+                            <constraint firstItem="VRk-4M-7r7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="93" id="rKL-0v-WXQ"/>
+                            <constraint firstItem="iZg-Ce-jfO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VRk-4M-7r7" secondAttribute="bottom" constant="95" id="tbd-t7-yea"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-78.75" y="133.09859154929578"/>
+        </scene>
+        <!--Record Dairy View Controller-->
+        <scene sceneID="j2a-8J-d7H">
+            <objects>
+                <viewController id="ag9-tm-Zqh" customClass="RecordDairyViewController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U7H-lN-HMK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="xiO-Ti-qJG"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="APS-Fd-jJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="650" y="134"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="IMG_4527" width="960" height="1280"/>
+        <image name="IMG_4756" width="960" height="1280"/>
+        <image name="IMG_7047" width="960" height="1280"/>
+        <image name="IMG_7898" width="960" height="1280"/>
+        <image name="IMG_8410" width="960" height="1280"/>
+        <image name="IMG_8690" width="960" height="1280"/>
+    </resources>
 </document>
