@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		64990BBD20AA963100C5B172 /* RecordDairyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64990BBC20AA963100C5B172 /* RecordDairyViewController.swift */; };
 		64D76E7D20838AD3008A19C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D76E7C20838AD3008A19C9 /* AppDelegate.swift */; };
-		64D76E7F20838AD3008A19C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D76E7E20838AD3008A19C9 /* ViewController.swift */; };
+		64D76E7F20838AD3008A19C9 /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D76E7E20838AD3008A19C9 /* DashboardController.swift */; };
 		64D76E8220838AD3008A19C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64D76E8020838AD3008A19C9 /* Main.storyboard */; };
 		64D76E8420838AD5008A19C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64D76E8320838AD5008A19C9 /* Assets.xcassets */; };
 		64D76E8720838AD5008A19C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64D76E8520838AD5008A19C9 /* LaunchScreen.storyboard */; };
@@ -39,7 +39,7 @@
 		64990BBE20AAAC0400C5B172 /* TimePortal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimePortal.entitlements; sourceTree = "<group>"; };
 		64D76E7920838AD3008A19C9 /* TimePortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimePortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64D76E7C20838AD3008A19C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		64D76E7E20838AD3008A19C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		64D76E7E20838AD3008A19C9 /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		64D76E8120838AD3008A19C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		64D76E8320838AD5008A19C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64D76E8620838AD5008A19C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				64990BBE20AAAC0400C5B172 /* TimePortal.entitlements */,
-				64D76E7E20838AD3008A19C9 /* ViewController.swift */,
+				64D76E7E20838AD3008A19C9 /* DashboardController.swift */,
 				64D76E8020838AD3008A19C9 /* Main.storyboard */,
 				64990BBC20AA963100C5B172 /* RecordDairyViewController.swift */,
 				64DBA61F2093119000C87772 /* Supporting Files */,
@@ -210,6 +210,9 @@
 							com.apple.DataProtection = {
 								enabled = 0;
 							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 					64D76E8C20838AD5008A19C9 = {
@@ -274,7 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64D76E7F20838AD3008A19C9 /* ViewController.swift in Sources */,
+				64D76E7F20838AD3008A19C9 /* DashboardController.swift in Sources */,
 				64D76E7D20838AD3008A19C9 /* AppDelegate.swift in Sources */,
 				64990BBD20AA963100C5B172 /* RecordDairyViewController.swift in Sources */,
 			);
@@ -449,6 +452,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TimePortal/TimePortal.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T42CC8W8BD;
 				INFOPLIST_FILE = TimePortal/Info.plist;
@@ -456,8 +461,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = mindtocode.TimePortal;
+				PRODUCT_BUNDLE_IDENTIFIER = Klarity.TimePortal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -467,6 +473,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TimePortal/TimePortal.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T42CC8W8BD;
 				INFOPLIST_FILE = TimePortal/Info.plist;
@@ -474,8 +482,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = mindtocode.TimePortal;
+				PRODUCT_BUNDLE_IDENTIFIER = Klarity.TimePortal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

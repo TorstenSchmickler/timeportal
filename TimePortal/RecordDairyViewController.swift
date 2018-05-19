@@ -8,62 +8,46 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
 class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
-    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        print(outputFileURL)
-    }
     
-    
-    private var diaryRecordingSession = AVCaptureSession()
+    // MARK: - OUTLETS
+    @IBOutlet weak var countDownLabel: UILabel! 
+
+    // MARK: - VARIABLE DECLARATIONS
+    private var diaryEntryRecordingSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var recordingSessionObserver: NSObjectProtocol?
     private var movieFileOutput: AVCaptureMovieFileOutput?
+    var countDown = 3 { didSet { countDownLabel.text = "\(countDown)" } }
+    var countdownTimer: Timer!
+    let defaults = UserDefaults.standard
+    let formatter = DateFormatter()
+    var fileName: String { get {
+        let today = Date()
+        formatter.dateFormat = "dd.MM.yyyy"
+        return formatter.string(from: today)
+        }}
 
+    
+    // MARK: - METHODS
     override func viewDidLoad() {
 
         super.viewDidLoad()
         
+        addObservers()
         
-        recordingSessionObserver = NotificationCenter.default.addObserver(
-            forName: Notification.Name.AVCaptureSessionDidStartRunning,
-            object: diaryRecordingSession,
-            queue: OperationQueue.main,
-            using: { notification in
-                print(notification.name)
-                // Start recording to a temporary file.
-                let outputFileName = NSUUID().uuidString
-                let outputFilePath = (NSTemporaryDirectory() as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
-                self.movieFileOutput?.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
-                // TODO: Start running the countdown
-            }
-        )
-        
-        recordingSessionObserver = NotificationCenter.default.addObserver(
-            forName: Notification.Name.AVCaptureSessionDidStopRunning,
-            object: diaryRecordingSession,
-            queue: OperationQueue.main,
-            using: { notification in
-                print(notification.name)
-                // TODO: Either show notification and and then segue back to main screen.
-            }
-        )
-        
-        // Initialize the diary recording session
         initializeDiaryRecording()
         
-        // Initialize the video preview layer and add it as a sublayer to the viewPreview view's layer.
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: diaryRecordingSession)
-        videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        videoPreviewLayer?.frame = view.layer.bounds
-        view.layer.addSublayer(videoPreviewLayer!)
+        initializePreviewLayer()
         
-        // Start video capture.
-        diaryRecordingSession.startRunning()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            self.diaryRecordingSession.stopRunning()
-            print("Session stopped recording")
-        }
+        diaryEntryRecordingSession.startRunning()
+    }
+    
+    func stopSessionRecording() {
+        self.diaryEntryRecordingSession.stopRunning()
+        print("Session stopped recording")
     }
 
     func initializeDiaryRecording() {
@@ -85,27 +69,107 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
             
             movieFileOutput = output
             
-            diaryRecordingSession.beginConfiguration()
+            diaryEntryRecordingSession.beginConfiguration()
             
-            diaryRecordingSession.addOutput(output)
+            diaryEntryRecordingSession.addOutput(output)
             if let connection = output.connection(with: .video) {
                 if connection.isVideoStabilizationSupported {
                     connection.preferredVideoStabilizationMode = .auto
                 }
             }
             
-            diaryRecordingSession.sessionPreset = .vga640x480
-            diaryRecordingSession.addInput(cameraInput)
-            diaryRecordingSession.addInput(audioInput)
-            diaryRecordingSession.commitConfiguration()
+            diaryEntryRecordingSession.sessionPreset = .cif352x288
+            diaryEntryRecordingSession.addInput(cameraInput)
+            diaryEntryRecordingSession.addInput(audioInput)
+            diaryEntryRecordingSession.commitConfiguration()
             
         } catch {
-            // If any error occurs, simply print it out and don't continue any more.
             print(error)
             return
         }
     }
+
+    func startCountdown() {
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.updateCountdown)), userInfo: nil, repeats: true)
+        print("Countdown started")
+    }
     
+    @objc func updateCountdown() {
+        if countDown > 1 {
+            countDown -= 1
+        } else {
+            print("Timer ended")
+            countdownTimer.invalidate()
+            stopSessionRecording()
+//            hideCountDown()
+//            showThankYouText()
+//            backToLaunchScreen()
+        }
+    }
+    
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        print(outputFileURL)
+        PHPhotoLibrary.requestAuthorization { status in
+            if status == PHAuthorizationStatus.denied {
+//            if status == .authorized {
+                // Save the movie file to the photo library and cleanup.
+                PHPhotoLibrary.shared().performChanges({
+                    let options = PHAssetResourceCreationOptions()
+                    options.shouldMoveFile = true
+                    let creationRequest = PHAssetCreationRequest.forAsset()
+                    creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
+                }, completionHandler: { success, error in
+                    if !success {
+                        print("Could not save movie to photo library: \(String(describing: error))")
+                    }
+                    
+                    if FileManager.default.fileExists(atPath: outputFileURL.path) {
+                        do {
+                            try FileManager.default.removeItem(atPath: outputFileURL.path)
+                        } catch {
+                            print("Could not remove file at url: \(outputFileURL)")
+                        }
+                    }
+                }
+                )
+            }
+        }
+    }
+    
+    func addObservers() {
+        recordingSessionObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name.AVCaptureSessionDidStartRunning,
+            object: diaryEntryRecordingSession,
+            queue: OperationQueue.main,
+            using: { notification in
+                print(notification.name)
+                // Start recording to a temporary file.
+                let outputFileName = self.fileName
+                let applicationSupportDirPath = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
+                let outputFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
+                self.movieFileOutput?.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
+                self.startCountdown()
+        }
+        )
+        
+        recordingSessionObserver = NotificationCenter.default.addObserver(
+            forName: Notification.Name.AVCaptureSessionDidStopRunning,
+            object: diaryEntryRecordingSession,
+            queue: OperationQueue.main,
+            using: { notification in
+                print(notification.name)
+                // TODO: Either show notification and and then segue back to main screen.
+        }
+        )
+    }
+    
+    func initializePreviewLayer() {
+        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: diaryEntryRecordingSession)
+        videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        videoPreviewLayer?.frame = view.layer.bounds
+        
+        view.layer.insertSublayer(videoPreviewLayer!, below: countDownLabel.layer)
+    }
 }
 
 
