@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,19 +19,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DashboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="85a-bj-kau">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DashboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="85a-bj-kau">
                                 <rect key="frame" x="0.0" y="0.0" width="321" height="568"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRk-4M-7r7">
-                                <rect key="frame" x="93" y="450" width="134" height="47"/>
-                                <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="30"/>
-                                <state key="normal" title="Add Entry">
-                                    <color key="titleColor" red="0.98912668599999998" green="1" blue="0.98374070579999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ag9-tm-Zqh" kind="presentation" id="Vgs-hR-hdP"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello Torsten, how are you? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64V-y8-TqI">
                                 <rect key="frame" x="61" y="58" width="198" height="82"/>
                                 <constraints>
@@ -40,23 +32,48 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRk-4M-7r7">
+                                <rect key="frame" x="115" y="398" width="90" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VRk-4M-7r7" secondAttribute="height" multiplier="1:1" id="9TI-4c-RW5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                                <color key="tintColor" red="0.98912668599999998" green="1" blue="0.98374070579999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <size key="titleShadowOffset" width="29" height="38"/>
+                                <state key="normal" image="addEntryicon">
+                                    <color key="titleShadowColor" red="0.1043080213" green="0.5547767857" blue="0.035200014289999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ag9-tm-Zqh" kind="presentation" id="Vgs-hR-hdP"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Come back tomorrow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-wM-0F4">
+                                <rect key="frame" x="25" y="426" width="271" height="35"/>
+                                <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="30"/>
+                                <color key="textColor" red="0.98900364714080424" green="1" blue="0.99539585305522982" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="VRk-4M-7r7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1Yz-NT-73T"/>
+                            <constraint firstItem="PI5-wM-0F4" firstAttribute="centerY" secondItem="VRk-4M-7r7" secondAttribute="centerY" id="7un-Ak-UeA"/>
                             <constraint firstItem="64V-y8-TqI" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" id="FsV-kD-D7r"/>
                             <constraint firstItem="64V-y8-TqI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="38" id="Jj9-J8-7Ky"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" constant="0.5" id="LgP-wQ-eZq"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="UxK-KS-owm"/>
                             <constraint firstItem="64V-y8-TqI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="61" id="aML-cJ-mWP"/>
+                            <constraint firstItem="PI5-wM-0F4" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" id="qGn-ft-lKZ"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="r5I-Nl-d9a"/>
-                            <constraint firstItem="VRk-4M-7r7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="430" id="rKL-0v-WXQ"/>
+                            <constraint firstItem="VRk-4M-7r7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="378" id="rKL-0v-WXQ"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tau-WC-I5h"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="VRk-4M-7r7" secondAttribute="bottom" constant="80" id="ygX-Jt-R0R"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="AddEntryButton" destination="VRk-4M-7r7" id="wUV-m1-7PL"/>
+                        <outlet property="ComeBackTomorrowLabel" destination="PI5-wM-0F4" id="zXK-02-kSn"/>
                         <outlet property="WelcomeMessageLabel" destination="64V-y8-TqI" id="bMu-2e-SVQ"/>
                     </connections>
                 </viewController>
@@ -72,7 +89,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="60" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HV1-pb-USm">
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="EntryFinishedImage" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-Ba-XB2">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Did you meet yourself?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aM-ku-jbt">
+                                <rect key="frame" x="16" y="192" width="288" height="125"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="44"/>
+                                <color key="textColor" red="0.95781202556718781" green="0.99507480202122334" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HV1-pb-USm">
                                 <rect key="frame" x="126" y="500" width="69" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -94,5 +122,7 @@
     </scenes>
     <resources>
         <image name="DashboardBackground" width="960" height="540"/>
+        <image name="EntryFinishedImage" width="1317" height="606"/>
+        <image name="addEntryicon" width="1600" height="1600"/>
     </resources>
 </document>

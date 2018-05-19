@@ -14,18 +14,21 @@ class DashboardController: UIViewController {
     // MARK: - OUTLETS
     @IBOutlet weak var AddEntryButton: UIButton!
     @IBOutlet weak var WelcomeMessageLabel: UILabel!
-    
+    @IBOutlet weak var ComeBackTomorrowLabel: UILabel!
     
     // MARK: - VARIABLES
     var userName = "" { didSet { WelcomeMessageLabel.text = "Hello \(userName), how are you?" } }
     var todaysDiaryEntered = false { didSet {
-        if todaysDiaryEntered {
+        if todaysDiaryEntered && !development{
+            print("Entry button was changed")
             AddEntryButton.isEnabled = false
-            AddEntryButton.setTitle("Come back tomorrow", for: .disabled)
+            AddEntryButton.isHidden = true
+            ComeBackTomorrowLabel.isHidden = false
         }
     }}
     let defaults = UserDefaults.standard
     let formatter = DateFormatter()
+    var development = true
     
     
     // MARK: - METHODS
@@ -42,12 +45,13 @@ class DashboardController: UIViewController {
 //        if let userNameFromUserDefaults = defaults.string(forKey: "userName") {
 //            userName = userNameFromUserDefaults
 //        }
+        print("initializing View")
         if let lastEntry = defaults.string(forKey: "lastEntry") {
             let today = Date()
             formatter.dateFormat = "dd.MM.yyyy"
             let todayAsString  = formatter.string(from: today)
             if lastEntry == todayAsString {
-            todaysDiaryEntered = true
+                todaysDiaryEntered = true
             }
         }
         // Add days until portal will open

@@ -16,11 +16,12 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     @IBOutlet weak var countDownLabel: UILabel! 
 
     // MARK: - VARIABLE DECLARATIONS
+    
     private var diaryEntryRecordingSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var recordingSessionObserver: NSObjectProtocol?
     private var movieFileOutput: AVCaptureMovieFileOutput?
-    var countDown = 3 { didSet { countDownLabel.text = "\(countDown)" } }
+    var countDown = 60 { didSet { countDownLabel.text = "\(countDown)" } }
     var countdownTimer: Timer!
     let defaults = UserDefaults.standard
     let formatter = DateFormatter()
@@ -32,6 +33,12 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
 
     
     // MARK: - METHODS
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("record view controller will disappear")
+        dismiss(animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
 
         super.viewDidLoad()
@@ -77,10 +84,10 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
                     connection.preferredVideoStabilizationMode = .auto
                 }
             }
-            
             diaryEntryRecordingSession.sessionPreset = .cif352x288
             diaryEntryRecordingSession.addInput(cameraInput)
             diaryEntryRecordingSession.addInput(audioInput)
+            
             diaryEntryRecordingSession.commitConfiguration()
             
         } catch {
@@ -90,6 +97,7 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     }
 
     func startCountdown() {
+        countDownLabel.text = String(countDown)
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.updateCountdown)), userInfo: nil, repeats: true)
         print("Countdown started")
     }
@@ -100,40 +108,15 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
         } else {
             print("Timer ended")
             countdownTimer.invalidate()
+            countDownLabel.text = ""
             stopSessionRecording()
-//            hideCountDown()
-//            showThankYouText()
-//            backToLaunchScreen()
+            videoPreviewLayer?.removeFromSuperlayer()
         }
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         print(outputFileURL)
-        PHPhotoLibrary.requestAuthorization { status in
-            if status == PHAuthorizationStatus.denied {
-//            if status == .authorized {
-                // Save the movie file to the photo library and cleanup.
-                PHPhotoLibrary.shared().performChanges({
-                    let options = PHAssetResourceCreationOptions()
-                    options.shouldMoveFile = true
-                    let creationRequest = PHAssetCreationRequest.forAsset()
-                    creationRequest.addResource(with: .video, fileURL: outputFileURL, options: options)
-                }, completionHandler: { success, error in
-                    if !success {
-                        print("Could not save movie to photo library: \(String(describing: error))")
-                    }
-                    
-                    if FileManager.default.fileExists(atPath: outputFileURL.path) {
-                        do {
-                            try FileManager.default.removeItem(atPath: outputFileURL.path)
-                        } catch {
-                            print("Could not remove file at url: \(outputFileURL)")
-                        }
-                    }
-                }
-                )
-            }
-        }
+        defaults.set(fileName, forKey: "lastEntry")
     }
     
     func addObservers() {
