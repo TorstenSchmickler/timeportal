@@ -87,7 +87,6 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
             diaryEntryRecordingSession.sessionPreset = .cif352x288
             diaryEntryRecordingSession.addInput(cameraInput)
             diaryEntryRecordingSession.addInput(audioInput)
-            
             diaryEntryRecordingSession.commitConfiguration()
             
         } catch {

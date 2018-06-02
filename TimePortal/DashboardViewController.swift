@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class DashboardController: UIViewController {
+class DashboardViewController: UIViewController {
 
     // MARK: - OUTLETS
     @IBOutlet weak var AddEntryButton: UIButton!
@@ -17,6 +17,8 @@ class DashboardController: UIViewController {
     @IBOutlet weak var ComeBackTomorrowLabel: UILabel!
     
     // MARK: - VARIABLES
+    var development = false
+    
     var userName = "" { didSet { WelcomeMessageLabel.text = "Hello \(userName), how are you?" } }
     var todaysDiaryEntered = false { didSet {
         if todaysDiaryEntered && !development{
@@ -28,16 +30,14 @@ class DashboardController: UIViewController {
     }}
     let defaults = UserDefaults.standard
     let formatter = DateFormatter()
-    var development = true
+    
     
     
     // MARK: - METHODS
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.initializeView()
-        self.askForCameraPermissions()
-       
+        self.askForRecordingPermissions()
     }
     
     func initializeView() {
@@ -45,7 +45,7 @@ class DashboardController: UIViewController {
 //        if let userNameFromUserDefaults = defaults.string(forKey: "userName") {
 //            userName = userNameFromUserDefaults
 //        }
-        print("initializing View")
+        print("DashboardController, initializeView() started")
         if let lastEntry = defaults.string(forKey: "lastEntry") {
             let today = Date()
             formatter.dateFormat = "dd.MM.yyyy"
@@ -57,16 +57,15 @@ class DashboardController: UIViewController {
         // Add days until portal will open
     }
     
-    func askForCameraPermissions() {
+    func askForRecordingPermissions() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            print("permissions granted")
+            print("AVCaptureDevice permissions granted")
             break
             
         case .notDetermined:
-            print("Permissions not yet given")
+            print("AVCaptureDevice Permissions not yet given")
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
-                
                 if !granted {
                     self.showPermissionsMissingAlert()
                 }
@@ -78,7 +77,7 @@ class DashboardController: UIViewController {
             })
             
         default:
-            print("permissions missing")
+            print("AVCaptureDevice permissions missing")
             showPermissionsMissingAlert()
         }
     }

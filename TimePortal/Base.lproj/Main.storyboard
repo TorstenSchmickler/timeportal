@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,16 +11,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Dashboard Controller-->
+        <!--Dashboard View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="DashboardController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="DashboardViewController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DashboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="85a-bj-kau">
-                                <rect key="frame" x="0.0" y="0.0" width="321" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320.5" height="568"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello Torsten, how are you? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64V-y8-TqI">
@@ -35,7 +35,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRk-4M-7r7">
                                 <rect key="frame" x="115" y="398" width="90" height="90"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="90" id="1qy-G5-bM5"/>
                                     <constraint firstAttribute="width" secondItem="VRk-4M-7r7" secondAttribute="height" multiplier="1:1" id="9TI-4c-RW5"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="90" id="jeN-uL-HLz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="47"/>
                                 <color key="tintColor" red="0.98912668599999998" green="1" blue="0.98374070579999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -67,7 +69,7 @@
                             <constraint firstItem="85a-bj-kau" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="r5I-Nl-d9a"/>
                             <constraint firstItem="VRk-4M-7r7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="378" id="rKL-0v-WXQ"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tau-WC-I5h"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="VRk-4M-7r7" secondAttribute="bottom" constant="80" id="ygX-Jt-R0R"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VRk-4M-7r7" secondAttribute="bottom" constant="80" id="ygX-Jt-R0R"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -89,13 +91,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="EntryFinishedImage" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-Ba-XB2">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EntryFinishedImage" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-Ba-XB2">
+                                <rect key="frame" x="0.0" y="0.0" width="318.5" height="568"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Did you meet yourself?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aM-ku-jbt">
-                                <rect key="frame" x="16" y="192" width="288" height="125"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did you meet yourself?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aM-ku-jbt">
+                                <rect key="frame" x="2" y="173" width="315" height="119"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="3aM-ku-jbt" secondAttribute="height" multiplier="429:125" constant="-93.408000000000015" id="Mk9-ZI-ni5"/>
+                                    <constraint firstAttribute="height" constant="119" id="s2V-OC-xbo"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="44"/>
                                 <color key="textColor" red="0.95781202556718781" green="0.99507480202122334" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -109,6 +113,14 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3aM-ku-jbt" firstAttribute="top" secondItem="xiO-Ti-qJG" secondAttribute="top" constant="153" id="95o-gw-3Do"/>
+                            <constraint firstItem="3aM-ku-jbt" firstAttribute="centerX" secondItem="OSZ-Ba-XB2" secondAttribute="centerX" id="9DV-sk-plF"/>
+                            <constraint firstItem="OSZ-Ba-XB2" firstAttribute="bottom" secondItem="xiO-Ti-qJG" secondAttribute="bottom" id="DCU-ma-aAN"/>
+                            <constraint firstItem="OSZ-Ba-XB2" firstAttribute="top" secondItem="U7H-lN-HMK" secondAttribute="top" id="myw-ap-xyy"/>
+                            <constraint firstItem="3aM-ku-jbt" firstAttribute="centerX" secondItem="U7H-lN-HMK" secondAttribute="centerX" id="rrE-tv-3ch"/>
+                            <constraint firstItem="OSZ-Ba-XB2" firstAttribute="leading" secondItem="U7H-lN-HMK" secondAttribute="leading" id="wMN-JB-M4g"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xiO-Ti-qJG"/>
                     </view>
                     <connections>
@@ -117,7 +129,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APS-Fd-jJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="648.75" y="133.09859154929578"/>
+            <point key="canvasLocation" x="646.875" y="132.04225352112675"/>
         </scene>
     </scenes>
     <resources>
