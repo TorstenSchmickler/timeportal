@@ -16,7 +16,6 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     @IBOutlet weak var countDownLabel: UILabel! 
 
     // MARK: - VARIABLE DECLARATIONS
-    
     private var diaryEntryRecordingSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var recordingSessionObserver: NSObjectProtocol?
@@ -29,14 +28,22 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
         let today = Date()
         formatter.dateFormat = "dd.MM.yyyy"
         return formatter.string(from: today)
-        }}
-
+        }
+    }
+    override var shouldAutorotate: Bool {
+        return false
+    }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
     // MARK: - METHODS
     
     override func viewWillDisappear(_ animated: Bool) {
         print("record view controller will disappear")
         dismiss(animated: true, completion: nil)
+        stopSessionRecording()
     }
     
     override func viewDidLoad() {
@@ -54,6 +61,7 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     
     func stopSessionRecording() {
         self.diaryEntryRecordingSession.stopRunning()
+        UIApplication.shared.isIdleTimerDisabled = false
         print("Session stopped recording")
     }
 
@@ -116,6 +124,7 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         print(outputFileURL)
         defaults.set(fileName, forKey: "lastEntry")
+        UserNotificationService.init().postponeToTomorrow()
     }
     
     func addObservers() {
@@ -126,12 +135,10 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
             using: { notification in
                 print(notification.name)
                 // Start recording to a temporary file.
-                let outputFileName = self.fileName
-                let applicationSupportDirPath = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
-                let outputFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
-                self.movieFileOutput?.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
+                self.startRecordingToFile()
                 self.startCountdown()
-        }
+                UIApplication.shared.isIdleTimerDisabled = true
+            }
         )
         
         recordingSessionObserver = NotificationCenter.default.addObserver(
@@ -141,8 +148,15 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
             using: { notification in
                 print(notification.name)
                 // TODO: Either show notification and and then segue back to main screen.
-        }
+            }
         )
+    }
+    
+    func startRecordingToFile() {
+        let outputFileName = self.fileName
+        let applicationSupportDirPath = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
+        let outputFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
+        self.movieFileOutput?.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
     }
     
     func initializePreviewLayer() {
@@ -152,6 +166,7 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
         
         view.layer.insertSublayer(videoPreviewLayer!, below: countDownLabel.layer)
     }
+
 }
 
 

@@ -10,11 +10,22 @@ import Foundation
 import UserNotifications
 
 class UserNotificationService {
+    
+    // MARK: Constants
     let userDefaultService = UserDefaultsService.init()
     let center = UNUserNotificationCenter.current()
     let NOTIFICATION_SETUP = "notificationsAreSetup"
+    var dailyReminderTime: Int { get { return 19 }}
     
+    // MARK: Functions
     func configureNotifications() {
+        center.getPendingNotificationRequests(completionHandler: { requests in
+            for request in requests {
+                print("printing requests")
+                print(request)
+            }
+        })
+        
         if areNotificationsInitialized() {
             print("configureNotifications notification initialized")
             return
@@ -22,22 +33,21 @@ class UserNotificationService {
         print("configureNotifications notification not initialized")
         initAndStoreNotificationConfiguration()
         
-//        self.center.getPendingNotificationRequests(completionHandler: { requests in
-//            for request in requests {
-//                print("printing requests")
-//                print(request)
-//            }
-//        })
+        
+    }
+    
+    func deleteDeliveredNotifications() {
+        center.removeAllDeliveredNotifications()
+        center.getPendingNotificationRequests(completionHandler: { requests in
+            for request in requests {
+                print("printing requests")
+                print(request)
+            }
+        })
     }
     
     func initAndStoreNotificationConfiguration() {
         print("initAndStoreNotificationConfiguration started")
-        let content = UNMutableNotificationContent()
-        content.title = "The rift is closing"
-        content.body = "Have a minute for yourself?"
-        content.badge = 1
-        content.sound = UNNotificationSound.default()
-        content.categoryIdentifier = "alarm"
 
         // Configure the recurring date.
         var dateComponents = DateComponents()
@@ -48,22 +58,34 @@ class UserNotificationService {
         let trigger = UNCalendarNotificationTrigger(
             dateMatching: dateComponents, repeats: true)
         
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: (5), repeats: false)
+        registerNotificationRequest(with: trigger)
         
-        // Create the request
-        let uuidString = UUID().uuidString
-        let request = UNNotificationRequest(identifier: uuidString,
+        userDefaultService.setValue(with: NOTIFICATION_SETUP, value: true)
+        print("initAndStoreNotificationConfiguration finished")
+        return
+    }
+    
+    func registerNotificationRequest(with trigger: UNNotificationTrigger) {
+        
+        let content = mutableNotificationContent()
+        let request = UNNotificationRequest(identifier: UUID().uuidString,
                                             content: content, trigger: trigger)
-        
-        // Schedule the request with the system.
         self.center.add(request) { (error) in
             if error != nil {
                 print("initAndStoreNotificationConfiguration error occured")
             }
         }
-        userDefaultService.setValue(with: NOTIFICATION_SETUP, value: true)
-        print("initAndStoreNotificationConfiguration finished")
-        return
+    }
+    
+    func mutableNotificationContent() -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.title = "The rift is closing"
+        content.body = "Have a minute for yourself?"
+        content.badge = 1
+        content.sound = UNNotificationSound.default()
+        content.categoryIdentifier = "alarm"
+        
+        return content
     }
     
     func areNotificationsInitialized() -> Bool {
@@ -74,23 +96,35 @@ class UserNotificationService {
         return false
     }
     
+    func postponeToTomorrow() {
+        center.removeAllPendingNotificationRequests()
+        
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        
+        let timeInterval = (24 - hour + dailyReminderTime) * 3600
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(timeInterval), repeats: false)
+
+        registerNotificationRequest(with: trigger)
+        
+    }
     
     init() {
         // Request permission to display alerts and play sounds.
         center.requestAuthorization(options: [.sound, .badge])
         { (granted, error) in
             if(error != nil) {
-                print(error)
+                print(error!)
                 return
             }
             print("userNotificationService Permissions where granted: \(granted)")
             self.center.getNotificationSettings { (settings) in
                 // Do not schedule notifications if not authorized.
                 guard settings.authorizationStatus == .authorized else {print("Notifications settings not granted"); return}
-                
                     print("Badge and sound granted")
                     self.configureNotifications()
-
             }   
         }
     }

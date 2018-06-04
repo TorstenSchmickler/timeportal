@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -16,15 +16,15 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="DashboardViewController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DashboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="85a-bj-kau">
-                                <rect key="frame" x="0.0" y="0.0" width="320.5" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375.5" height="667"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello Torsten, how are you? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64V-y8-TqI">
-                                <rect key="frame" x="61" y="58" width="198" height="82"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello Kati, how are you? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64V-y8-TqI">
+                                <rect key="frame" x="61" y="58" width="254" height="82"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="JDD-jQ-ZGK"/>
                                 </constraints>
@@ -33,7 +33,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRk-4M-7r7">
-                                <rect key="frame" x="115" y="398" width="90" height="90"/>
+                                <rect key="frame" x="142.5" y="497" width="90" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="90" id="1qy-G5-bM5"/>
                                     <constraint firstAttribute="width" secondItem="VRk-4M-7r7" secondAttribute="height" multiplier="1:1" id="9TI-4c-RW5"/>
@@ -50,7 +50,7 @@
                                 </connections>
                             </button>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Come back tomorrow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PI5-wM-0F4">
-                                <rect key="frame" x="25" y="426" width="271" height="35"/>
+                                <rect key="frame" x="52.5" y="525" width="271" height="35"/>
                                 <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="30"/>
                                 <color key="textColor" red="0.98900364714080424" green="1" blue="0.99539585305522982" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -67,7 +67,6 @@
                             <constraint firstItem="64V-y8-TqI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="61" id="aML-cJ-mWP"/>
                             <constraint firstItem="PI5-wM-0F4" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" id="qGn-ft-lKZ"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="r5I-Nl-d9a"/>
-                            <constraint firstItem="VRk-4M-7r7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="378" id="rKL-0v-WXQ"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tau-WC-I5h"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VRk-4M-7r7" secondAttribute="bottom" constant="80" id="ygX-Jt-R0R"/>
                         </constraints>
@@ -88,14 +87,14 @@
             <objects>
                 <viewController id="ag9-tm-Zqh" customClass="RecordDairyViewController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U7H-lN-HMK">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EntryFinishedImage" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-Ba-XB2">
-                                <rect key="frame" x="0.0" y="0.0" width="318.5" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="374.5" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Did you meet yourself?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3aM-ku-jbt">
-                                <rect key="frame" x="2" y="173" width="315" height="119"/>
+                                <rect key="frame" x="30" y="173" width="315" height="119"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="3aM-ku-jbt" secondAttribute="height" multiplier="429:125" constant="-93.408000000000015" id="Mk9-ZI-ni5"/>
                                     <constraint firstAttribute="height" constant="119" id="s2V-OC-xbo"/>

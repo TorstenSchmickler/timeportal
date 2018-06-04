@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var userNotificationService = UserNotificationService.init()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
+        UIApplication.shared.isIdleTimerDisabled = false
         let sb = UIStoryboard(name: "Main", bundle: nil)
         /// Load initial view controller
         let vc = sb.instantiateInitialViewController()
@@ -42,9 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        userNotificationService.deleteDeliveredNotifications()
         print("Appdelegate, applicationDidBecomeActive()")
         UIApplication.shared.applicationIconBadgeNumber = 0
-        UserNotificationService.init()
+        
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 

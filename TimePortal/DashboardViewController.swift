@@ -29,9 +29,16 @@ class DashboardViewController: UIViewController {
         }
     }}
     let defaults = UserDefaults.standard
+    let userDefaultService = UserDefaultsService.init()
     let formatter = DateFormatter()
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
     // MARK: - METHODS
     override func viewDidLoad() {
@@ -41,10 +48,7 @@ class DashboardViewController: UIViewController {
     }
     
     func initializeView() {
-//        userName = userConfiguration.userName
-//        if let userNameFromUserDefaults = defaults.string(forKey: "userName") {
-//            userName = userNameFromUserDefaults
-//        }
+        userName = userDefaultService.getValue(with: "userName", of: "String") as! String
         print("DashboardController, initializeView() started")
         if let lastEntry = defaults.string(forKey: "lastEntry") {
             let today = Date()
@@ -101,5 +105,6 @@ class DashboardViewController: UIViewController {
             self.present(alertController, animated: true, completion: nil)
         }
     }
+    
 }
 
