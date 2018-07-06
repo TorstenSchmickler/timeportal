@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6430F92C20C29014001904CF /* userNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6430F92B20C29014001904CF /* userNotificationService.swift */; };
 		6430F92E20C298AD001904CF /* userDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6430F92D20C298AD001904CF /* userDefaultsService.swift */; };
+		643E168620E7899F00FBB6FD /* ReplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643E168520E7899F00FBB6FD /* ReplayViewController.swift */; };
 		64990BBD20AA963100C5B172 /* RecordDairyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64990BBC20AA963100C5B172 /* RecordDairyViewController.swift */; };
 		64D76E7D20838AD3008A19C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D76E7C20838AD3008A19C9 /* AppDelegate.swift */; };
 		64D76E7F20838AD3008A19C9 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D76E7E20838AD3008A19C9 /* DashboardViewController.swift */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		6430F92B20C29014001904CF /* userNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userNotificationService.swift; sourceTree = "<group>"; };
 		6430F92D20C298AD001904CF /* userDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultsService.swift; sourceTree = "<group>"; };
+		643E168520E7899F00FBB6FD /* ReplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayViewController.swift; sourceTree = "<group>"; };
 		64990BBC20AA963100C5B172 /* RecordDairyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDairyViewController.swift; sourceTree = "<group>"; };
 		64990BBE20AAAC0400C5B172 /* TimePortal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TimePortal.entitlements; sourceTree = "<group>"; };
 		64D76E7920838AD3008A19C9 /* TimePortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimePortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +108,7 @@
 			children = (
 				64990BBE20AAAC0400C5B172 /* TimePortal.entitlements */,
 				64D76E7E20838AD3008A19C9 /* DashboardViewController.swift */,
+				643E168520E7899F00FBB6FD /* ReplayViewController.swift */,
 				64D76E8020838AD3008A19C9 /* Main.storyboard */,
 				64990BBC20AA963100C5B172 /* RecordDairyViewController.swift */,
 				64DBA61F2093119000C87772 /* Supporting Files */,
@@ -284,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64D76E7F20838AD3008A19C9 /* DashboardViewController.swift in Sources */,
+				643E168620E7899F00FBB6FD /* ReplayViewController.swift in Sources */,
 				64D76E7D20838AD3008A19C9 /* AppDelegate.swift in Sources */,
 				64990BBD20AA963100C5B172 /* RecordDairyViewController.swift in Sources */,
 				6430F92E20C298AD001904CF /* userDefaultsService.swift in Sources */,

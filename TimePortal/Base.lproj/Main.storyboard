@@ -8,6 +8,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -55,9 +56,20 @@
                                 <color key="textColor" red="0.98900364714080424" green="1" blue="0.99539585305522982" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1FN-Mg-APw">
+                                <rect key="frame" x="253" y="20" width="106" height="67"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="46"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="OC1-by-fag" kind="show" id="Ffw-uS-Kau"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="1FN-Mg-APw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="64V-y8-TqI" secondAttribute="leading" id="0G3-sK-4hD"/>
                             <constraint firstItem="VRk-4M-7r7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1Yz-NT-73T"/>
                             <constraint firstItem="PI5-wM-0F4" firstAttribute="centerY" secondItem="VRk-4M-7r7" secondAttribute="centerY" id="7un-Ak-UeA"/>
                             <constraint firstItem="64V-y8-TqI" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" id="FsV-kD-D7r"/>
@@ -65,8 +77,10 @@
                             <constraint firstItem="85a-bj-kau" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" constant="0.5" id="LgP-wQ-eZq"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="UxK-KS-owm"/>
                             <constraint firstItem="64V-y8-TqI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="61" id="aML-cJ-mWP"/>
+                            <constraint firstItem="PI5-wM-0F4" firstAttribute="top" secondItem="1FN-Mg-APw" secondAttribute="bottom" constant="438" id="alw-s0-T2e"/>
                             <constraint firstItem="PI5-wM-0F4" firstAttribute="centerX" secondItem="VRk-4M-7r7" secondAttribute="centerX" id="qGn-ft-lKZ"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="r5I-Nl-d9a"/>
+                            <constraint firstItem="1FN-Mg-APw" firstAttribute="centerX" secondItem="85a-bj-kau" secondAttribute="centerX" constant="118.25" id="rco-ei-Yqd"/>
                             <constraint firstItem="85a-bj-kau" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tau-WC-I5h"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VRk-4M-7r7" secondAttribute="bottom" constant="80" id="ygX-Jt-R0R"/>
                         </constraints>
@@ -80,7 +94,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78.75" y="133.09859154929578"/>
+            <point key="canvasLocation" x="-79.200000000000003" y="132.68365817091455"/>
         </scene>
         <!--Record Dairy View Controller-->
         <scene sceneID="j2a-8J-d7H">
@@ -128,7 +142,68 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="APS-Fd-jJG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="646.875" y="132.04225352112675"/>
+            <point key="canvasLocation" x="711" y="-249"/>
+        </scene>
+        <!--Replay View Controller-->
+        <scene sceneID="Iuc-Oj-HeZ">
+            <objects>
+                <viewController id="OC1-by-fag" customClass="ReplayViewController" customModule="TimePortal" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Uak-vK-LWe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IAl-90-ynZ">
+                                <rect key="frame" x="8" y="28" width="359" height="631"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubs-91-LTF">
+                                        <rect key="frame" x="0.0" y="293.5" width="114.5" height="44"/>
+                                        <color key="backgroundColor" red="0.876388370623846" green="0.91718854840787445" blue="0.9270836609475156" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <state key="normal" title="May">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="a3S-Tl-ejI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7e-84-BH9">
+                                        <rect key="frame" x="122.5" y="293.5" width="114" height="44"/>
+                                        <color key="backgroundColor" red="0.876388370623846" green="0.91718854840787445" blue="0.9270836609475156" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <state key="normal" title="June">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="Gng-fo-LaP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szM-Ir-McW">
+                                        <rect key="frame" x="244.5" y="293.5" width="114.5" height="44"/>
+                                        <color key="backgroundColor" red="0.876388370623846" green="0.91718854840787445" blue="0.9270836609475156" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <state key="normal" title="July">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="CYi-WM-ALb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IAl-90-ynZ" firstAttribute="leading" secondItem="v8H-ep-A09" secondAttribute="leading" constant="8" id="6FG-3m-7J0"/>
+                            <constraint firstItem="IAl-90-ynZ" firstAttribute="top" secondItem="v8H-ep-A09" secondAttribute="top" constant="8" id="Lin-lz-zWO"/>
+                            <constraint firstItem="v8H-ep-A09" firstAttribute="trailing" secondItem="IAl-90-ynZ" secondAttribute="trailing" constant="8" id="f6D-GT-wJ9"/>
+                            <constraint firstItem="v8H-ep-A09" firstAttribute="bottom" secondItem="IAl-90-ynZ" secondAttribute="bottom" constant="8" id="vFV-Lf-Nfh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="v8H-ep-A09"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oXg-dh-7Rg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="710" y="431"/>
         </scene>
     </scenes>
     <resources>

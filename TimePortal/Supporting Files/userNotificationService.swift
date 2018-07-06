@@ -38,12 +38,12 @@ class UserNotificationService {
     
     func deleteDeliveredNotifications() {
         center.removeAllDeliveredNotifications()
-        center.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                print("printing requests")
-                print(request)
-            }
-        })
+//        center.getPendingNotificationRequests(completionHandler: { requests in
+//            for request in requests {
+//                print("printing requests")
+//                print(request)
+//            }
+//        })
     }
     
     func initAndStoreNotificationConfiguration() {
