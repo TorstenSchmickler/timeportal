@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import Photos
 
-class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     // MARK: - OUTLETS
     @IBOutlet weak var countDownLabel: UILabel! 
@@ -20,7 +20,7 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     private var recordingSessionObserver: NSObjectProtocol?
     private var movieFileOutput: AVCaptureMovieFileOutput?
-    var countDown = 60 { didSet { countDownLabel.text = "\(countDown)" } }
+    var countDown = 59 { didSet { countDownLabel.text = "\(countDown)" } }
     var countdownTimer: Timer!
     let defaults = UserDefaults.standard
     let formatter = DateFormatter()
@@ -110,7 +110,7 @@ class RecordDairyViewController: UIViewController, AVCaptureFileOutputRecordingD
     }
     
     @objc func updateCountdown() {
-        if countDown > 1 {
+        if countDown > 0 {
             countDown -= 1
         } else {
             print("Timer ended")

@@ -47,8 +47,15 @@ class DashboardViewController: UIViewController {
         self.askForRecordingPermissions()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if let storedUsername = defaults.string(forKey: "userName") {
+            userName = storedUsername
+        } else {
+            showInputDialog()
+        }
+    }
+    
     func initializeView() {
-        userName = userDefaultService.getValue(with: "userName", of: "String") as! String
         print("DashboardController, initializeView() started")
         if let lastEntry = defaults.string(forKey: "lastEntry") {
             let today = Date()
@@ -106,5 +113,35 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    func showInputDialog() {
+        print("inputdialog called")
+        let alertController = UIAlertController(title: "App Customization", message: "Enter your name", preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
+            self.userName = (alertController.textFields?[0].text)!.capitalizingFirstLetter()
+            self.defaults.set(self.userName, forKey: "userName")
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Enter Name"
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }
 
