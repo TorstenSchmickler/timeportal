@@ -17,11 +17,10 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var ComeBackTomorrowLabel: UILabel!
     
     // MARK: - VARIABLES
-    var development = false
-    
     var userName = "" { didSet { WelcomeMessageLabel.text = "Hello \(userName), how are you?" } }
+    var userNameNotSet = false
     var todaysDiaryEntered = false { didSet {
-        if todaysDiaryEntered && !development{
+        if todaysDiaryEntered {
             print("Entry button was changed")
             AddEntryButton.isEnabled = false
             AddEntryButton.isHidden = true
@@ -48,15 +47,38 @@ class DashboardViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if let storedUsername = defaults.string(forKey: "userName") {
-            userName = storedUsername
-        } else {
+        if (userNameNotSet) {
             showInputDialog()
+        }
+        
+        let fileManager  = FileManager.default
+        let applicationSupportDirPath = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        let entryUrls = try! fileManager.contentsOfDirectory(at: applicationSupportDirPath, includingPropertiesForKeys: [.creationDateKey])
+        let documentsDirUrl = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//        let originalFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent(("07.07.2018" as NSString).appendingPathExtension("mov")!)
+
+        
+        for url in entryUrls {
+            print(url.lastPathComponent, "copied")
+            let lastPathComponent = url.lastPathComponent
+            if (lastPathComponent == "01.06.2018.mov" || lastPathComponent == "07.07.2018.mov" || lastPathComponent == "02.06.2018.mov" ) {
+                
+            } else {
+                let newFileUrl = documentsDirUrl.appendingPathComponent(url.lastPathComponent)
+                print(newFileUrl)
+                try! fileManager.copyItem(at: url, to: newFileUrl)
+
+            }
         }
     }
     
     func initializeView() {
         print("DashboardController, initializeView() started")
+        if let storedUsername = defaults.string(forKey: "userName") {
+            userName = storedUsername
+        } else {
+            userNameNotSet = true
+        }
         if let lastEntry = defaults.string(forKey: "lastEntry") {
             let today = Date()
             formatter.dateFormat = "dd.MM.yyyy"

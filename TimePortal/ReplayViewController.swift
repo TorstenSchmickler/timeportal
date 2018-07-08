@@ -7,7 +7,7 @@
 //
 
 
-// TODO: Upload application support folder to Icloud 
+
 
 import UIKit
 import AVKit
@@ -15,24 +15,39 @@ import AVFoundation
 
 class ReplayViewController: UIViewController {
     
-    let monthStringToInt: [String:Int] = ["May": 5, "June": 6, "July": 7]
+    // TODO: Add Date as label overlay to the avplayer to see which Day of the month it was recorded
+    // TODO: Upload application support folder to Icloud
+    
+  
+    // MARK: Variables
+    @IBOutlet var monthButtonCollection: [UIButton]!
+    let monthStringToInt: [String:Int] = ["January": 1, "February": 2, "March": 3, "May": 5, "June": 6, "July": 7, "August": 8]
     let calendar = NSCalendar.current
     
+    // MARK: Methods
     @IBAction func replaySelected(_ sender: UIButton) {
         let monthlyFilteredEntries = filterEntriesByMonth(monthStringToInt[sender.currentTitle!]!)
 //        let sortedFilteredEntries = sortEntries(monthlyFilteredEntries)
         playEntries(monthlyFilteredEntries)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+//        monthButtonCollection[2].isHidden = true
+        monthButtonCollection[3].isHidden = true
+        monthButtonCollection[4].isHidden = true
+        monthButtonCollection[5].isHidden = true
+        monthButtonCollection[6].isHidden = true
+        monthButtonCollection[7].isHidden = true
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
     private func filterEntriesByMonth(_ month: Int) -> [AVPlayerItem] {
         let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         var monthlyEntries: Array<AVPlayerItem> = []
         
         do {

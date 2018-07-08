@@ -154,7 +154,7 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
     
     func startRecordingToFile() {
         let outputFileName = self.fileName
-        let applicationSupportDirPath = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
+        let applicationSupportDirPath = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
         let outputFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
         self.movieFileOutput?.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
     }
