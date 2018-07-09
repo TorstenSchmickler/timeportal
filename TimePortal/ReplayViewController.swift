@@ -21,7 +21,7 @@ class ReplayViewController: UIViewController {
   
     // MARK: Variables
     @IBOutlet var monthButtonCollection: [UIButton]!
-    let monthStringToInt: [String:Int] = ["January": 1, "February": 2, "March": 3, "May": 5, "June": 6, "July": 7, "August": 8]
+    let monthStringToInt: [String:Int] = ["May": 5, "June": 6, "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12]
     let calendar = NSCalendar.current
     
     // MARK: Methods
@@ -33,16 +33,36 @@ class ReplayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        monthButtonCollection[2].isHidden = true
-        monthButtonCollection[3].isHidden = true
-        monthButtonCollection[4].isHidden = true
-        monthButtonCollection[5].isHidden = true
-        monthButtonCollection[6].isHidden = true
-        monthButtonCollection[7].isHidden = true
+        showOnlyFeasibleMonth()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    private func showOnlyFeasibleMonth() {
+        let currentMonth = calendar.component(.month, from: Date())
+        print(currentMonth, "currenpenismonth")
+        let defaults = UserDefaults.standard
+        let penisArray: NSArray = [Date(), Date()]
+        defaults.set(penisArray, forKey: "EntryArray")
+        let storedPenisArray = defaults.array(forKey: "EntryArray") ?? []
+        var monthWithEntries: [Int:String] = [:]
+        for entryDate in storedPenisArray {
+            let month = calendar.component(.month, from: entryDate as! Date)
+            monthWithEntries[month-5] = "yepp"
+        }
+        monthWithEntries[0] = "penis"
+//        monthWithEntries[1] = "penis"
+        print(monthWithEntries)
+        for index in 0..<8 {
+            monthButtonCollection[index].isHidden = true
+            print(index, monthButtonCollection[index].currentTitle, "unhidden")
+            if (index < currentMonth - 5) && (monthWithEntries[index] != nil) {
+//                print(index, monthButtonCollection[index].currentTitle, "unhidden")
+                monthButtonCollection[index].isHidden = false
+            }
+        }
     }
     
     private func filterEntriesByMonth(_ month: Int) -> [AVPlayerItem] {

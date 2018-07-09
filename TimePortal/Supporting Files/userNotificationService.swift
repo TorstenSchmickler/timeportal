@@ -52,7 +52,7 @@ class UserNotificationService {
         // Configure the recurring date.
         var dateComponents = DateComponents()
         dateComponents.calendar = Calendar.current
-        dateComponents.hour = 19
+        dateComponents.hour = dailyReminderTime
         
         // Create the trigger as a repeating event.
         let trigger = UNCalendarNotificationTrigger(
@@ -111,22 +111,26 @@ class UserNotificationService {
         
     }
     
-    init() {
+    func requestAuthorization() {
         // Request permission to display alerts and play sounds.
-        center.requestAuthorization(options: [.sound, .badge])
-        { (granted, error) in
-            if(error != nil) {
-                print(error!)
-                return
+        DispatchQueue.main.async {
+            self.center.requestAuthorization(options: [.sound, .badge])
+            { (granted, error) in
+                if(error != nil) {
+                    print(error!)
+                    return
+                }
+                print("userNotificationService Permissions where granted: \(granted)")
             }
-            print("userNotificationService Permissions where granted: \(granted)")
-            self.center.getNotificationSettings { (settings) in
-                // Do not schedule notifications if not authorized.
-                guard settings.authorizationStatus == .authorized else {print("Notifications settings not granted"); return}
-                    print("Badge and sound granted")
-                    self.configureNotifications()
-            }   
         }
     }
     
+    init() {
+        self.center.getNotificationSettings { (settings) in
+            // Do not schedule notifications if not authorized.
+            guard settings.authorizationStatus == .authorized else {print("Notifications settings not granted"); return}
+            print("Badge and sound granted")
+            self.configureNotifications()
+        }
+    }
 }

@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320.5" height="568"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello Kati, how are you? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64V-y8-TqI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, how are you? " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64V-y8-TqI">
                                 <rect key="frame" x="61" y="58" width="198.5" height="82"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="82" id="JDD-jQ-ZGK"/>
@@ -164,30 +164,30 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="IAl-90-ynZ">
                                         <rect key="frame" x="3" y="0.0" width="298" height="127"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7e-84-BH9">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szM-Ir-McW">
                                                 <rect key="frame" x="0.0" y="40" width="145" height="47"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="145" id="vg2-bB-l1I"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="145" id="bdS-6x-KQE"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="30"/>
                                                 <state key="normal" title="May">
                                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="Gng-fo-LaP"/>
+                                                    <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="CYi-WM-ALb"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szM-Ir-McW">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7e-84-BH9">
                                                 <rect key="frame" x="153" y="40" width="145" height="47"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="145" id="bdS-6x-KQE"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="145" id="vg2-bB-l1I"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Cochin" family="Cochin" pointSize="30"/>
                                                 <state key="normal" title="June">
                                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="CYi-WM-ALb"/>
+                                                    <action selector="replaySelected:" destination="OC1-by-fag" eventType="touchUpInside" id="Gng-fo-LaP"/>
                                                 </connections>
                                             </button>
                                         </subviews>

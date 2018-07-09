@@ -30,6 +30,11 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
         return formatter.string(from: today)
         }
     }
+    enum GetDeviceError: Error {
+        case canNotAccessMicrophone
+        case canNotAccessCamera
+    }
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -50,13 +55,14 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
 
         super.viewDidLoad()
         
-        addObservers()
-        
-        initializeDiaryRecording()
-        
-        initializePreviewLayer()
-        
-        diaryEntryRecordingSession.startRunning()
+        do {
+            try initializeDiaryRecording()
+            addObservers()
+            initializePreviewLayer()
+            diaryEntryRecordingSession.startRunning()
+        } catch {
+            print(error)
+        }
     }
     
     func stopSessionRecording() {
@@ -65,16 +71,15 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
         print("Session stopped recording")
     }
 
-    func initializeDiaryRecording() {
+    func initializeDiaryRecording() throws {
         
         guard let microphone = AVCaptureDevice.default(.builtInMicrophone, for: AVMediaType.audio, position: .unspecified) else {
-            print("Failed to get the microphone device")
-            return
+            throw GetDeviceError.canNotAccessMicrophone
         }
         
+        
         guard let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front) else {
-            print("Failed to get the camera device")
-            return
+            throw GetDeviceError.canNotAccessCamera
         }
         
         do {
@@ -99,8 +104,9 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
             
         } catch {
             print(error)
-            return
+            throw error
         }
+        return
     }
 
     func startCountdown() {
@@ -166,7 +172,6 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
         
         view.layer.insertSublayer(videoPreviewLayer!, below: countDownLabel.layer)
     }
-
 }
 
 

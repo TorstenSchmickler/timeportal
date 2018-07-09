@@ -19,6 +19,7 @@ class DashboardViewController: UIViewController {
     // MARK: - VARIABLES
     var userName = "" { didSet { WelcomeMessageLabel.text = "Hello \(userName), how are you?" } }
     var userNameNotSet = false
+    var popUpClear = false { didSet { self.askForPermissionsInSequence() }}
     var todaysDiaryEntered = false { didSet {
         if todaysDiaryEntered {
             print("Entry button was changed")
@@ -30,7 +31,18 @@ class DashboardViewController: UIViewController {
     let defaults = UserDefaults.standard
     let userDefaultService = UserDefaultsService.init()
     let formatter = DateFormatter()
-    
+    var permissionsGranted = true {
+        didSet {
+            print("penis was called")
+            DispatchQueue.main.async {
+                self.AddEntryButton.isHidden = true
+                self.ComeBackTomorrowLabel.text = "Permissions missing"
+                self.ComeBackTomorrowLabel.isHidden = false
+            }
+        }
+    }
+    lazy var initCommands = [{ self.initializeUserName() }, { self.askForVideoPermissions() }, { UserNotificationService.init().requestAuthorization() }]
+        
     override var shouldAutorotate: Bool {
         return false
     }
@@ -43,32 +55,12 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initializeView()
-        self.askForRecordingPermissions()
+        askForPermissionsInSequence()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if (userNameNotSet) {
-            showInputDialog()
-        }
-        
-        let fileManager  = FileManager.default
-        let applicationSupportDirPath = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let entryUrls = try! fileManager.contentsOfDirectory(at: applicationSupportDirPath, includingPropertiesForKeys: [.creationDateKey])
-        let documentsDirUrl = try! fileManager.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-//        let originalFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent(("07.07.2018" as NSString).appendingPathExtension("mov")!)
-
-        
-        for url in entryUrls {
-            print(url.lastPathComponent, "copied")
-            let lastPathComponent = url.lastPathComponent
-            if (lastPathComponent == "01.06.2018.mov" || lastPathComponent == "07.07.2018.mov" || lastPathComponent == "02.06.2018.mov" ) {
-                
-            } else {
-                let newFileUrl = documentsDirUrl.appendingPathComponent(url.lastPathComponent)
-                print(newFileUrl)
-                try! fileManager.copyItem(at: url, to: newFileUrl)
-
-            }
+    func askForPermissionsInSequence() {
+        DispatchQueue.main.async {
+            self.initCommands.remove(at: 0)()
         }
     }
     
@@ -90,27 +82,28 @@ class DashboardViewController: UIViewController {
         // Add days until portal will open
     }
     
-    func askForRecordingPermissions() {
+    func askForVideoPermissions() {
+        print("askForVideoPermissions")
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            print("AVCaptureDevice permissions granted")
+            print("AVCaptureDevice Video permissions granted")
+            popUpClear = true
             break
             
         case .notDetermined:
-            print("AVCaptureDevice Permissions not yet given")
+            print("AVCaptureDevice Video Permissions not yet given")
             AVCaptureDevice.requestAccess(for: .video, completionHandler: { granted in
+                self.popUpClear = true
                 if !granted {
+                    self.permissionsGranted = false
                     self.showPermissionsMissingAlert()
                 }
-                AVCaptureDevice.requestAccess(for: .audio, completionHandler: { granted in
-                    if !granted {
-                        self.showPermissionsMissingAlert()
-                    }
-                })
             })
             
         default:
-            print("AVCaptureDevice permissions missing")
+            self.permissionsGranted = false
+            popUpClear = true
+            print("AVCaptureDevice Video permissions missing")
             showPermissionsMissingAlert()
         }
     }
@@ -135,16 +128,25 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    func initializeUserName() {
+        if (userNameNotSet) {
+            showInputDialog()
+        } else {
+            popUpClear = true
+        }
+    }
+    
     func showInputDialog() {
         print("inputdialog called")
-        let alertController = UIAlertController(title: "App Customization", message: "Enter your name", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Your Profile", message: "Enter your name", preferredStyle: .alert)
         
         let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             self.userName = (alertController.textFields?[0].text)!.capitalizingFirstLetter()
             self.defaults.set(self.userName, forKey: "userName")
+            self.popUpClear = true
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in self.popUpClear = true }
         
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter Name"
