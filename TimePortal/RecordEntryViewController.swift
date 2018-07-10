@@ -24,12 +24,17 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
     var countdownTimer: Timer!
     let defaults = UserDefaults.standard
     let formatter = DateFormatter()
+    let today = Date()
     var fileName: String { get {
-        let today = Date()
         formatter.dateFormat = "dd.MM.yyyy"
         return formatter.string(from: today)
         }
     }
+    enum GetDeviceError: Error {
+        case canNotAccessMicrophone
+        case canNotAccessCamera
+    }
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -50,13 +55,14 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
 
         super.viewDidLoad()
         
-        addObservers()
-        
-        initializeDiaryRecording()
-        
-        initializePreviewLayer()
-        
-        diaryEntryRecordingSession.startRunning()
+        do {
+            try initializeDiaryRecording()
+            addObservers()
+            initializePreviewLayer()
+            diaryEntryRecordingSession.startRunning()
+        } catch {
+            print(error)
+        }
     }
     
     func stopSessionRecording() {
@@ -65,16 +71,15 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
         print("Session stopped recording")
     }
 
-    func initializeDiaryRecording() {
+    func initializeDiaryRecording() throws {
         
         guard let microphone = AVCaptureDevice.default(.builtInMicrophone, for: AVMediaType.audio, position: .unspecified) else {
-            print("Failed to get the microphone device")
-            return
+            throw GetDeviceError.canNotAccessMicrophone
         }
         
+        
         guard let frontCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: AVMediaType.video, position: .front) else {
-            print("Failed to get the camera device")
-            return
+            throw GetDeviceError.canNotAccessCamera
         }
         
         do {
@@ -99,8 +104,9 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
             
         } catch {
             print(error)
-            return
+            throw error
         }
+        return
     }
 
     func startCountdown() {
@@ -124,7 +130,14 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         print(outputFileURL)
         defaults.set(fileName, forKey: "lastEntry")
+        appendTodayToEntries()
         UserNotificationService.init().postponeToTomorrow()
+    }
+    
+    func appendTodayToEntries() {
+        var storedEntrys = defaults.array(forKey: "EntryArray") ?? []
+        storedEntrys.append(today)
+        defaults.set(storedEntrys, forKey: "EntryArray")
     }
     
     func addObservers() {
@@ -154,7 +167,7 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
     
     func startRecordingToFile() {
         let outputFileName = self.fileName
-        let applicationSupportDirPath = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
+        let applicationSupportDirPath = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).path
         let outputFilePath = ( applicationSupportDirPath as NSString).appendingPathComponent((outputFileName as NSString).appendingPathExtension("mov")!)
         self.movieFileOutput?.startRecording(to: URL(fileURLWithPath: outputFilePath), recordingDelegate: self)
     }
@@ -166,7 +179,6 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
         
         view.layer.insertSublayer(videoPreviewLayer!, below: countDownLabel.layer)
     }
-
 }
 
 
