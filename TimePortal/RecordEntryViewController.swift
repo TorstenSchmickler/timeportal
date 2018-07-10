@@ -24,8 +24,8 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
     var countdownTimer: Timer!
     let defaults = UserDefaults.standard
     let formatter = DateFormatter()
+    let today = Date()
     var fileName: String { get {
-        let today = Date()
         formatter.dateFormat = "dd.MM.yyyy"
         return formatter.string(from: today)
         }
@@ -130,7 +130,14 @@ class RecordEntryViewController: UIViewController, AVCaptureFileOutputRecordingD
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         print(outputFileURL)
         defaults.set(fileName, forKey: "lastEntry")
+        appendTodayToEntries()
         UserNotificationService.init().postponeToTomorrow()
+    }
+    
+    func appendTodayToEntries() {
+        var storedEntrys = defaults.array(forKey: "EntryArray") ?? []
+        storedEntrys.append(today)
+        defaults.set(storedEntrys, forKey: "EntryArray")
     }
     
     func addObservers() {

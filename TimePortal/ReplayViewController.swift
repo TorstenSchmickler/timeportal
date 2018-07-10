@@ -23,6 +23,7 @@ class ReplayViewController: UIViewController {
     @IBOutlet var monthButtonCollection: [UIButton]!
     let monthStringToInt: [String:Int] = ["May": 5, "June": 6, "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12]
     let calendar = NSCalendar.current
+    let defaults = UserDefaults.standard
     
     // MARK: Methods
     @IBAction func replaySelected(_ sender: UIButton) {
@@ -42,24 +43,19 @@ class ReplayViewController: UIViewController {
     
     private func showOnlyFeasibleMonth() {
         let currentMonth = calendar.component(.month, from: Date())
-        print(currentMonth, "currenpenismonth")
-        let defaults = UserDefaults.standard
-        let penisArray: NSArray = [Date(), Date()]
-        defaults.set(penisArray, forKey: "EntryArray")
-        let storedPenisArray = defaults.array(forKey: "EntryArray") ?? []
-        var monthWithEntries: [Int:String] = [:]
-        for entryDate in storedPenisArray {
+        
+        let storedEntries = defaults.array(forKey: "EntryArray") ?? []
+        var monthWithEntries: [Int:Int] = [:]
+        
+        // TODO: Refactor this to a dictionary, that is being updated asynchronously
+        for entryDate in storedEntries {
             let month = calendar.component(.month, from: entryDate as! Date)
-            monthWithEntries[month-5] = "yepp"
+            monthWithEntries[month-5] = 1
         }
-        monthWithEntries[0] = "penis"
-//        monthWithEntries[1] = "penis"
-        print(monthWithEntries)
+
         for index in 0..<8 {
             monthButtonCollection[index].isHidden = true
-            print(index, monthButtonCollection[index].currentTitle, "unhidden")
             if (index < currentMonth - 5) && (monthWithEntries[index] != nil) {
-//                print(index, monthButtonCollection[index].currentTitle, "unhidden")
                 monthButtonCollection[index].isHidden = false
             }
         }
@@ -77,6 +73,16 @@ class ReplayViewController: UIViewController {
                 }
                 .sorted(by: { $0.1 < $1.1 }) // sort descending creation dates
                 .map { $0.0 } // extract file names
+            
+//            var storedEntryDates: [Date] = []
+//
+//            entryUrls.map { url in
+//                (url, (try? url.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? Date.distantPast)
+//            }
+//                .map { storedEntryDates.append($0.1) }
+//
+//            print(storedEntryDates)
+//            defaults.set(storedEntryDates, forKey: "EntryArray")
             
             let filteredEntryUrls = try sortedEntryUrls.filter {
                 let entryMonth = try calendar.component(.month, from: $0.resourceValues(forKeys: [.creationDateKey]).creationDate!)

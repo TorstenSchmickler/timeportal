@@ -3,7 +3,7 @@
 //  TimePortal
 //
 //  Created by Torsten Schmickler on 15/04/2018.
-//  Copyright © 2018 Torsten Schmickler. All rights reserved.
+//  Copyright © 2018 Torsten . All rights reserved.
 //
 
 import UIKit
@@ -15,25 +15,18 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var AddEntryButton: UIButton!
     @IBOutlet weak var WelcomeMessageLabel: UILabel!
     @IBOutlet weak var ComeBackTomorrowLabel: UILabel!
+    @IBOutlet weak var replayButton: UIButton!
     
+    @IBOutlet weak var daysLeftLabel: UILabel!
     // MARK: - VARIABLES
     var userName = "" { didSet { WelcomeMessageLabel.text = "Hello \(userName), how are you?" } }
     var userNameNotSet = false
     var popUpClear = false { didSet { self.askForPermissionsInSequence() }}
     var todaysDiaryEntered = false { didSet {
-        if todaysDiaryEntered {
-            print("Entry button was changed")
-            AddEntryButton.isEnabled = false
-            AddEntryButton.isHidden = true
-            ComeBackTomorrowLabel.isHidden = false
-        }
+        showComeBackTomorrowView()
     }}
-    let defaults = UserDefaults.standard
-    let userDefaultService = UserDefaultsService.init()
-    let formatter = DateFormatter()
     var permissionsGranted = true {
         didSet {
-            print("penis was called")
             DispatchQueue.main.async {
                 self.AddEntryButton.isHidden = true
                 self.ComeBackTomorrowLabel.text = "Permissions missing"
@@ -41,7 +34,18 @@ class DashboardViewController: UIViewController {
             }
         }
     }
+    var isNewReviewAvailable = false { didSet {
+        // TODO: Add Twinkl to draw effect on replayButton
+        }
+    }
+
     lazy var initCommands = [{ self.initializeUserName() }, { self.askForVideoPermissions() }, { UserNotificationService.init().requestAuthorization() }]
+    let defaults = UserDefaults.standard
+    let userDefaultService = UserDefaultsService.init()
+    let formatter = DateFormatter()
+    let calendar = Calendar.current
+    let today = Date()
+
         
     override var shouldAutorotate: Bool {
         return false
@@ -63,6 +67,14 @@ class DashboardViewController: UIViewController {
             self.initCommands.remove(at: 0)()
         }
     }
+    func showComeBackTomorrowView() {
+        if todaysDiaryEntered {
+            print("Entry button was changed")
+            AddEntryButton.isEnabled = false
+            AddEntryButton.isHidden = true
+            ComeBackTomorrowLabel.isHidden = false
+        }
+    }
     
     func initializeView() {
         print("DashboardController, initializeView() started")
@@ -72,14 +84,41 @@ class DashboardViewController: UIViewController {
             userNameNotSet = true
         }
         if let lastEntry = defaults.string(forKey: "lastEntry") {
-            let today = Date()
             formatter.dateFormat = "dd.MM.yyyy"
             let todayAsString  = formatter.string(from: today)
             if lastEntry == todayAsString {
                 todaysDiaryEntered = true
             }
         }
+        synchronizeDefaultsWithDatabase()
         // Add days until portal will open
+    }
+    
+    func synchronizeDefaultsWithDatabase() {
+        let currentMonth = calendar.component(.month, from: today)
+        let currentDay = calendar.component(.day, from: today)
+        let dayInMonthRange = calendar.range(of: .day, in: .month, for: today)
+        let maxDay = dayInMonthRange!.count
+        daysLeftLabel.text = String(maxDay-currentDay)
+        
+        let storedEntries = defaults.array(forKey: "EntryArray") ?? []
+        var monthWithEntries: [Int:Int] = [:]
+        
+        // TODO: Refactor this to a dictionary, that is being updated asynchronously
+        for entryDate in storedEntries {
+            let month = calendar.component(.month, from: entryDate as! Date)
+            monthWithEntries[month-5] = 1
+        }
+        for index in 0..<8 {
+            if (index < currentMonth - 5) && (monthWithEntries[index] != nil) {
+                showReplaySegueButton()
+                break
+            }
+        }
+    }
+    func showReplaySegueButton() {
+        daysLeftLabel.isHidden = true
+        replayButton.isHidden = false
     }
     
     func askForVideoPermissions() {
